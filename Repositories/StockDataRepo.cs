@@ -3,6 +3,7 @@ using KBAlphaBusinessApi.Helpers;
 using KBAlphaBusinessApi.Interfaces;
 using KBAlphaBusinessApi.Models.StockModels.AlphaVantage_Models;
 using KBAlphaBusinessApi.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,6 +16,18 @@ namespace KBAlphaBusinessApi.Repositories
     public class StockDataRepo : IStock
     {
         private string _endpoint;
+
+        public async Task<object> GetCPIData(string interval)
+        {
+            _endpoint = Constants.AlphaVantageBaseUrl +
+                        $"query?function=CPI&interval={interval}&apikey={Constants.Alpha_Vantage_Api_Key}";
+
+            var json = await APIConnector.Start_Alpha_Vantage_Connection(_endpoint).Content.ReadAsStringAsync();
+
+            var cpiData = JsonConvert.DeserializeObject<CPI>(json);
+
+            return cpiData;
+        }
 
         public object GetDividendData(string ticker)
         {

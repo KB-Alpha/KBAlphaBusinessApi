@@ -42,5 +42,13 @@ namespace KBAlphaBusinessApi.Controllers.Investing
             return _stockData.GetEarningsData();
         }
 
+        //GET api/<StocksController>/
+        //Get earnings calendar data
+        [HttpGet("macroecon/cpidata/{interval}")]
+        public object GetCPIData(string interval)
+        {
+            return _stockData.GetCPIData(interval);
+        }
+
     }
 }

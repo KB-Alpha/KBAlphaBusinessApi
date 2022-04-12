@@ -12,5 +12,7 @@ namespace KBAlphaBusinessApi.Interfaces
         object GetDividendExData();
 
         Task<object> GetEarningsData();
+
+        Task<object> GetCPIData(string interval);
     }
 }
