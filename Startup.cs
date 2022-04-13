@@ -8,8 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Quartz;
+using Quartz.Impl;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,9 +20,14 @@ namespace KBAlphaBusinessApi
 {
     public class Startup
     {
+
+        private IScheduler _schedular;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            _schedular = ConfigureScheduler().Result;
         }
 
         public IConfiguration Configuration { get; }
@@ -34,7 +42,17 @@ namespace KBAlphaBusinessApi
             services.AddTransient<ICommodity, CommodityDataRepo>();
 
             services.AddTransient<IMacroeconomic, MacroEconomicDataRepo>();
+
+            //Schedular
+            services.AddSingleton(provider => _schedular);
         }
+
+        private void OnShutDown()
+        {
+            if (!_schedular.IsShutdown)
+                _schedular.Shutdown();
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -54,6 +72,25 @@ namespace KBAlphaBusinessApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        //Sets up the schedduler using quartz library
+        public async Task<IScheduler> ConfigureScheduler()
+        {
+            NameValueCollection props = new NameValueCollection()
+            {
+                {"quartz.serlizer.type", "binary" }
+            };
+
+
+            // construct a scheduler factory using defaults
+            StdSchedulerFactory factory = new StdSchedulerFactory();
+
+            // get a scheduler
+            IScheduler scheduler = factory.GetScheduler().Result;
+            await scheduler.Start();
+
+            return scheduler;
         }
     }
 }
