@@ -1,4 +1,5 @@
 ﻿using KBAlphaBusinessApi.Algorithm;
+using KBAlphaBusinessApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -16,6 +17,9 @@ namespace KBAlphaBusinessApi.Controllers
         //To start the scheduler 
         private readonly IScheduler _iScheduler;
 
+        //Temp code
+        private readonly Database<object> _dataService;
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -23,15 +27,20 @@ namespace KBAlphaBusinessApi.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IScheduler iScheduler)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+                                         IScheduler iScheduler, 
+                                         Database<object> dataService
+                                         )
         {
             _logger = logger;
 
             _iScheduler = iScheduler;
+
+            _dataService = dataService;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public object GetData()
         {
             // define the job and tie it to our MainApplication class
             IJobDetail job = JobBuilder.Create<MainLogic>()
@@ -50,13 +59,18 @@ namespace KBAlphaBusinessApi.Controllers
             _iScheduler.ScheduleJob(job, trigger);
 
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            /*return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
-            .ToArray();
+            .ToArray();*/
+
+            var data = _dataService.GetAsync().Result.ToArray();
+
+            return data;
+
         }
     }
 }

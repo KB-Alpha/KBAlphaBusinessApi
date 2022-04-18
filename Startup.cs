@@ -1,5 +1,6 @@
 using KBAlphaBusinessApi.Interfaces;
 using KBAlphaBusinessApi.Repositories;
+using KBAlphaBusinessApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -45,6 +46,9 @@ namespace KBAlphaBusinessApi
 
             //Schedular
             services.AddSingleton(provider => _schedular);
+
+            //Database
+            services.AddSingleton<Database<object>>();
         }
 
         private void OnShutDown()

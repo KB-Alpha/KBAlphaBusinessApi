@@ -142,5 +142,24 @@ namespace KBAlphaBusinessApi.Services
         }
 
         #endregion
+
+
+        #region Database
+        public static void Start_MongoDB_Connection()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
     }
 }

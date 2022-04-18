@@ -49,5 +49,13 @@ namespace KBAlphaBusinessApi.Helpers
         //Commo Prices api base url
         public const string CommoPricesBaseUrl = "https://api.commoprices.com/";
         #endregion
+
+        #region MongoDB database
+        //Cz5QF88D5cduZJFr - password
+        // where there is sample_airbnb in the connection - name of the database
+        public const string MongoConnectionString = "mongodb+srv://khanyithegreat:Cz5QF88D5cduZJFr@kbalphabusiness.f4bzy.mongodb.net/sample_airbnb?retryWrites=true&w=majority";
+        public const string MongoDBBaseUrl = "https://data.mongodb-api.com/app/data-ceyts/endpoint/data/beta";
+        public const string MongoDBApiKey = "UKYk6uIPyzawxOp54xsfanybhPqXrw2hGvhQDLsVBpfkiAQVhkneeJbYzoPdJf4l";
+        #endregion
     }
 }
