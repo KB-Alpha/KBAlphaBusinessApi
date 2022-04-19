@@ -17,13 +17,9 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
 
         private IQuote _iQuote;
 
-        public CRMController(IDeal iDeal)
+        public CRMController(IDeal iDeal, IQuote iQuote)
         {
             _iDeal = iDeal;
-        }
-
-        public CRMController(IQuote iQuote)
-        {
             _iQuote = iQuote;
         }
 
@@ -44,10 +40,10 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
 
         // POST api/<CRMController>
         //Create bulk deals
-        [HttpPost("create/deals")]
-        public void Post([FromBody] string value)
+        [HttpPost("create/deal")]
+        public void Post([FromBody] object deal)
         {
-            _iDeal.CreateDealBulk(value);
+            _iDeal.CreateDeal(deal);
         }
 
         // PUT api/<CRMController>/5

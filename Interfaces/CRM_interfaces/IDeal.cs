@@ -11,7 +11,7 @@ namespace KBAlphaBusinessApi.Interfaces.CRM_interfaces
 
         Task<object> GetDeal(string _id);
 
-        Task<bool> CreateDeal(object Deal);
+        Task<bool> CreateDeal(object deal);
 
         Task DeleteDeal(string _id);
 

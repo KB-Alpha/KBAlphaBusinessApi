@@ -57,5 +57,7 @@ namespace KBAlphaBusinessApi.Helpers
         public const string MongoDBBaseUrl = "https://data.mongodb-api.com/app/data-ceyts/endpoint/data/beta";
         public const string MongoDBApiKey = "UKYk6uIPyzawxOp54xsfanybhPqXrw2hGvhQDLsVBpfkiAQVhkneeJbYzoPdJf4l";
         #endregion
+
+        public const string HubSpot_API_KEY = "1273499c-9232-4f0d-9fa5-da4f899f2cbb";
     }
 }

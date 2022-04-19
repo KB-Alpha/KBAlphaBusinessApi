@@ -1,4 +1,5 @@
 using KBAlphaBusinessApi.Interfaces;
+using KBAlphaBusinessApi.Interfaces.CRM_interfaces;
 using KBAlphaBusinessApi.Repositories;
 using KBAlphaBusinessApi.Services;
 using Microsoft.AspNetCore.Builder;
@@ -39,6 +40,10 @@ namespace KBAlphaBusinessApi
             services.AddControllers();
 
             services.AddTransient<IStock, StockDataRepo>();
+
+            services.AddTransient<IDeal, CRMDataRepo>();
+
+            services.AddTransient<IQuote, CRMDataRepo>();
 
             services.AddTransient<ICommodity, CommodityDataRepo>();
 

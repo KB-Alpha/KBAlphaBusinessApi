@@ -161,5 +161,66 @@ namespace KBAlphaBusinessApi.Services
             }
         }
         #endregion
+
+        #region CRM
+        //Get connection
+        public static HttpResponseMessage Start_Get_HubSpot_Connection(string endpoint)
+        {
+            try
+            {
+
+                string HubSpot_API_Path = "https://api.hubapi.com/{0}?hapikey={1}";
+
+                
+                HubSpot_API_Path = string.Format(HubSpot_API_Path, endpoint, Constants.HubSpot_API_KEY);
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    client.BaseAddress = new Uri(HubSpot_API_Path);
+
+                    HttpResponseMessage response = client.GetAsync(HubSpot_API_Path).GetAwaiter().GetResult();
+
+                    return response;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public static object Start_Post_Hubspot_Connection(string endpoint, HttpContent content)
+        {
+            try
+            {
+                string HubSpot_API_Path = "https://api.hubapi.com/{0}?hapikey={1}";
+
+                HubSpot_API_Path = string.Format(HubSpot_API_Path, endpoint, Constants.HubSpot_API_KEY);
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    client.BaseAddress = new Uri(HubSpot_API_Path);
+
+                     var post = client.PostAsync(endpoint, content);
+
+                    return post;
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
     }
 }
