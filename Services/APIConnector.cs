@@ -194,7 +194,7 @@ namespace KBAlphaBusinessApi.Services
             }
         }
 
-        public static object Start_Post_Hubspot_Connection(string endpoint, HttpContent content)
+        public async static Task<string> Start_Post_Hubspot_Connection(string endpoint, HttpContent content)
         {
             try
             {
@@ -208,11 +208,9 @@ namespace KBAlphaBusinessApi.Services
 
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    client.BaseAddress = new Uri(HubSpot_API_Path);
+                     var post =await client.PostAsync(HubSpot_API_Path, content);
 
-                     var post = client.PostAsync(endpoint, content);
-
-                    return post;
+                    return post.Content.ReadAsStringAsync().Result;
                 };
             }
             catch (Exception)

@@ -25,6 +25,9 @@ namespace KBAlphaBusinessApi
 
         private IScheduler _schedular;
 
+        //CORS
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -45,6 +48,8 @@ namespace KBAlphaBusinessApi
 
             services.AddTransient<IQuote, CRMDataRepo>();
 
+            services.AddTransient<IContact, CRMDataRepo>();
+
             services.AddTransient<ICommodity, CommodityDataRepo>();
 
             services.AddTransient<IMacroeconomic, MacroEconomicDataRepo>();
@@ -54,6 +59,17 @@ namespace KBAlphaBusinessApi
 
             //Database
             services.AddSingleton<Database<object>>();
+
+            //Cors
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, builders =>
+                {
+                    builders.WithOrigins("http://localhost:*")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
         }
 
         private void OnShutDown()
@@ -74,6 +90,10 @@ namespace KBAlphaBusinessApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+
+            //Cors
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 
