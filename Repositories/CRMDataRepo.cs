@@ -91,11 +91,11 @@ namespace KBAlphaBusinessApi.Repositories
             try
             {
                 var json =  APIConnector
-                           .Start_Get_HubSpot_Connection(dealbaseEndpoint)
-                           .Content
-                           .ReadAsStringAsync()
-                           .ConfigureAwait(false)
-                           .GetAwaiter().GetResult();
+                    .Start_Get_HubSpot_Connection(dealbaseEndpoint)
+                    .Content
+                    .ReadAsStringAsync()
+                    .Result;
+
 
                 var data = JsonConvert.DeserializeObject<object>(json);
                 
