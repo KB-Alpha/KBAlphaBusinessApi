@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "kbaalphaclusterqa-077d"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "kbaalphaclusterqa-077d"
+  template:
+    metadata:
+      labels:
+        app: "kbaalphaclusterqa-077d"
+    spec:
+      containers:
+        - name: "kbaalphaclusterqa-077d"
+          image: "serapismedicalapi.azurecr.io/kbaalphaclusterqa"
+          ports:
+          - containerPort: 80
