@@ -16,11 +16,11 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
     [ApiController]
     public class CRMController : ControllerBase
     {
-        private IDeal _iDeal;
+        private readonly IDeal _iDeal;
 
-        private IQuote _iQuote;
+        private readonly IQuote _iQuote;
 
-        private IContact _iContact;
+        private readonly IContact _iContact;
 
         public CRMController(IDeal iDeal, IQuote iQuote, IContact iContact)
         {

@@ -94,7 +94,8 @@ namespace KBAlphaBusinessApi.Repositories
                            .Start_Get_HubSpot_Connection(dealbaseEndpoint)
                            .Content
                            .ReadAsStringAsync()
-                           .Result;
+                           .ConfigureAwait(false)
+                           .GetAwaiter().GetResult();
 
                 var data = JsonConvert.DeserializeObject<object>(json);
                 
