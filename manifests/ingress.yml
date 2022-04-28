@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "kbaalphaclusterqa-077d"
+    labels:
+        app: "kbaalphaclusterqa-077d"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: kbaalphaclusterqab016-kbaalphaclusterqa-077d.8bbe2fdcb8b048b5a7a8.uksouth.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "kbaalphaclusterqa-077d"
+                servicePort: 80
