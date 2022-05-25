@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KBAlphaBusinessApi.Models.CrmModels.DealModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace KBAlphaBusinessApi.Interfaces.CRM_interfaces
 
         Task<object> GetDeal(string _id);
 
-        Task<bool> CreateDeal(object deal);
+        object CreateDeal(DealDto deal);
 
         Task DeleteDeal(string _id);
 

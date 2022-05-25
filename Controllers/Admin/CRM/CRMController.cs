@@ -1,5 +1,6 @@
 ﻿using KBAlphaBusinessApi.Interfaces.CRM_interfaces;
 using KBAlphaBusinessApi.Models.CrmModels;
+using KBAlphaBusinessApi.Models.CrmModels.DealModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -29,6 +30,16 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
             _iContact = iContact;
         }
 
+        #region Quote endpoints
+        // POST api/<CRMController>
+        //Send the quote to hubspot
+        [HttpPost("create/quote")]
+        public void PostQuote([FromBody] Quote quote)
+        {
+            _iQuote.CreateQuote(quote);
+        }
+        #endregion
+
         #region Deal endpoints
         // GET: api/<CRMController>
         [HttpGet("deals")]
@@ -47,9 +58,21 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
         // POST api/<CRMController>
         //Create bulk deals
         [HttpPost("create/deal")]
-        public void Post([FromBody] object deal)
+        public object PostDeal([FromBody] dynamic deal)
         {
-            _iDeal.CreateDeal(deal);
+            try
+            {
+                var _deal = System.Text.Json.JsonSerializer.Serialize(deal);
+
+                DealDto dealDto = JsonConvert.DeserializeObject<DealDto>(_deal);
+
+                return _iDeal.CreateDeal(dealDto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // PUT api/<CRMController>/5
@@ -69,16 +92,16 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
 
         #region Contact endpoints
         [HttpPost("create/contact")]
-        public object PostContact([FromBody] dynamic deal)
+        public object PostContact([FromBody] dynamic contact)
         {
             //Convert the deal object to a contactdto 
             try
             {
-                var _deal = System.Text.Json.JsonSerializer.Serialize(deal);
+                var _contact = System.Text.Json.JsonSerializer.Serialize(contact);
 
-                ContactDTO contact = JsonConvert.DeserializeObject<ContactDTO>(_deal);
+                ContactDTO contactDto = JsonConvert.DeserializeObject<ContactDTO>(_contact);
 
-                return _iContact.PostContact(contact);
+                return _iContact.PostContact(contactDto);
             }
             catch (Exception ex)
             {

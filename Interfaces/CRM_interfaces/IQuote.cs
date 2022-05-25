@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KBAlphaBusinessApi.Models.CrmModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,7 @@ namespace KBAlphaBusinessApi.Interfaces.CRM_interfaces
         Task UpdateQuote(string _id);
 
         Task<string> DeleteQuote(string _id);
+
+        Task<object> CreateQuote(Quote quoteDetails);
     }
 }

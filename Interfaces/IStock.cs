@@ -14,5 +14,8 @@ namespace KBAlphaBusinessApi.Interfaces
         Task<object> GetEarningsData();
 
         Task<object> GetCPIData(string interval);
+
+        object GetTrendingStockNews(string region);
+
     }
 }

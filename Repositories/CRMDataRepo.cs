@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using KBAlphaBusinessApi.Models.CrmModels;
 using System.Text;
+using System.Diagnostics;
+using KBAlphaBusinessApi.Helpers;
+using KBAlphaBusinessApi.Models.CrmModels.DealModels;
 
 namespace KBAlphaBusinessApi.Repositories
 {
@@ -15,7 +18,7 @@ namespace KBAlphaBusinessApi.Repositories
     {
         private string dealbaseEndpoint = "crm/v3/objects/deals";
 
-        private string quotebaseEndpoint = "";
+        private string quotebaseEndpoint = "crm/v3/objects/quotes";
 
         private string contactEndpoint = "crm/v3/objects/contacts";
 
@@ -30,24 +33,58 @@ namespace KBAlphaBusinessApi.Repositories
         }
 
         //Create a deal from the contact
-        public Task<bool> CreateDeal(object deal)
+        public object CreateDeal(DealDto deal)
         {
-            StringContent content = new StringContent(deal.ToString());
+
+            var json = JsonConvert.SerializeObject(deal);
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
-                 var postStatus = APIConnector.Start_Post_Hubspot_Connection(dealbaseEndpoint, content);
+                 var postStatus = APIConnector.Start_Post_Hubspot_Connection(dealbaseEndpoint, content).Result;
+
+                return postStatus;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return ex.Message;
             }
-            throw new NotImplementedException();
+            
         }
 
         public Task CreateDealBulk(object deal)
         {
             throw new NotImplementedException();
+        }
+
+
+        //Make a quote for a client
+        public async Task<object> CreateQuote(Quote quoteDetails)
+        {
+
+            try
+            {
+
+                //first convert the argument into the correct model
+                var json = JsonConvert.SerializeObject(quoteDetails);
+
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                //log for debugging purposes
+                Debug.WriteLine("*********************Quote Data: ", data);
+
+                var response = await APIConnector.Start_Post_Hubspot_Connection(quotebaseEndpoint, data);
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                //log the error
+                Debug.WriteLine("Error ------>", ex.Message);
+                return ex.Message;
+            }
         }
 
         public Task DeleteDeal(string _id)
@@ -75,8 +112,22 @@ namespace KBAlphaBusinessApi.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<object> GetDeal(string _id)
+        public async Task<object> GetDeal(string _id)
         {
+            string _endpoint = dealbaseEndpoint + "/" +_id;
+
+            try
+            {
+                var json = APIConnector.Start_Get_HubSpot_Connection(_endpoint).Content.ReadAsStringAsync().Result;
+
+                var data = JsonConvert.DeserializeObject<Deal>(json);
+
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
             throw new NotImplementedException();
         }
 

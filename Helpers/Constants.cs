@@ -9,7 +9,7 @@ namespace KBAlphaBusinessApi.Helpers
     {
         #region Finaince Constants
         //Yahoo api key
-        public const string YahooApiKey = "XtEYTQpjGA3rq7OFKwznP5IExLOFpqta5JlwVQx4";
+        public const string YahooApiKey = "LXiATXLuQJ1BvmMdosA0F2Levpe7w96W78Swky4m";
 
         //Yahoo base url
         public const string BaseUrl = "https://yfapi.net/";
@@ -58,6 +58,10 @@ namespace KBAlphaBusinessApi.Helpers
         public const string MongoDBApiKey = "UKYk6uIPyzawxOp54xsfanybhPqXrw2hGvhQDLsVBpfkiAQVhkneeJbYzoPdJf4l";
         #endregion
 
+        //Hubspot credentials
         public const string HubSpot_API_KEY = "1273499c-9232-4f0d-9fa5-da4f899f2cbb";
+
+        public const string HubSpot_Owner_Id = "51774224";
+
     }
 }
