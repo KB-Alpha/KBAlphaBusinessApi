@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KBAlphaBusinessApi.Models.CrmModels
+namespace KBAlphaBusinessApi.Models.CrmModels.QuoteModels
 {
-    public class Quote
+    public class QuoteCore
     {
         public string id { get; set; }
         public QuoteProperties properties { get; set; }

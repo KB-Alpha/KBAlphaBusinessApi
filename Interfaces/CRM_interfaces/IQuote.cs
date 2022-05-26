@@ -16,6 +16,6 @@ namespace KBAlphaBusinessApi.Interfaces.CRM_interfaces
 
         Task<string> DeleteQuote(string _id);
 
-        Task<object> CreateQuote(Quote quoteDetails);
+        Task<object> CreateQuote(object quoteDetails);
     }
 }

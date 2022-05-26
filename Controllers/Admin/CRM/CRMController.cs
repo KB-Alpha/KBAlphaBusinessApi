@@ -34,9 +34,9 @@ namespace KBAlphaBusinessApi.Controllers.Admin.CRM
         // POST api/<CRMController>
         //Send the quote to hubspot
         [HttpPost("create/quote")]
-        public void PostQuote([FromBody] Quote quote)
+        public object PostQuote([FromBody] object quote)
         {
-            _iQuote.CreateQuote(quote);
+            return _iQuote.CreateQuote(quote);
         }
         #endregion
 

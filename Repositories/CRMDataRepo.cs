@@ -60,7 +60,7 @@ namespace KBAlphaBusinessApi.Repositories
 
 
         //Make a quote for a client
-        public async Task<object> CreateQuote(Quote quoteDetails)
+        public async Task<object> CreateQuote(object quoteDetails)
         {
 
             try
@@ -97,8 +97,20 @@ namespace KBAlphaBusinessApi.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<object> GetAQuote(string _id)
+        public async Task<object> GetAQuote(string _id)
         {
+            if(_id != null)
+            try
+            {
+                    //generate the endpoint
+                    string _endpoint = quotebaseEndpoint + $"/{_id}";
+
+
+            }
+            catch (Exception ex)
+            {
+                    return ex.Message;
+            }
             throw new NotImplementedException();
         }
 
